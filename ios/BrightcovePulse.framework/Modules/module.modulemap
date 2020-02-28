@@ -1,0 +1,6 @@
+framework module BrightcovePulse {
+  umbrella header "BrightcovePulse.h"
+
+  export *
+  module * { export * }
+}
