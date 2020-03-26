@@ -1,12 +1,10 @@
 //
-//  BCOVPulseCompanionSlot.h
-//  BrightcovePulse
+// BCOVPulseCompanionSlot.h
+// BrightcovePulse
 //
-//  Created by Carlos Ceja on 2/13/20.
+// Copyright (c) 2020 Brightcove, Inc. All rights reserved.
+// License: https://accounts.brightcove.com/en/terms-and-conditions
 //
-
-#import <UIKit/UIKit.h>
-
 
 /**
  * This class represents a companion slot to be populated with a matching companion ad.

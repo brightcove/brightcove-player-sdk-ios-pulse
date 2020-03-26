@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.1
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.4.1018
 
 Requirements
 ============
@@ -8,41 +8,45 @@ Requirements
 
 Supported Platforms
 ==========
-iOS 10.0 and above.
-tvOS 10.0 and above
+iOS 11.0 and above.
+tvOS 11.0 and above
 
 Installation
 ==========
-Pulse Plugin for Brightcove Player SDK provides a static library framework for installation.
+Pulse Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
 The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.5.20.1.0 for iOS and version 2.5.19.9.0 for tvOS. The Podspec for the Pulse Plugin for Brightcove Player SDK references [Pulse SDK Release History](http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html). 
 
 CocoaPods
 ----------
 
-You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-Pulse` podspec [here][podspecs]. The PulseSDK needs to be added to your project, download the latest version [here][pulsesdk]. CocoaPods 1.0 or newer is required.
+You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-Pulse` podspec [here][podspecs]. The PulseSDK needs to be added to your project, download the latest version [here](https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html). CocoaPods 1.0 or newer is required.
 
 CocoaPod Podfile example:
 
 ```
+source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
-pod 'Brightcove-Player-Pulse'
-```
+platform :ios, '11.0'
+use_frameworks!
 
-[pulsesdk]: https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html
+target 'MyApp' do
+	pod 'Brightcove-Player-Pulse'
+end
+```
 
 Manual
 ----------
 
 To add the Pulse Plugin for Brightcove Player SDK to your project manually:
 
-1. Download the [Brightcove Player SDK][bcovsdk] framework.
-1. Download the [Pulse Plugin for Brightcove Player SDK][bcovpulse] framework.
-1. Download the [PulseSDK][pulsesdk] framework.
-1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Embedded Binaries**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download.
-1. On the "General" tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of **Embedded Binaries**.
-1. On the "General" tab of your application target, add PulseSDK.framework from the INVIDI Technolgies download to the list of **Embedded Binaries**.
+1. Download the latest zipped Brightcove Player SDK framework from the [releases page][bcovsdkreleases].
+1. Download the latest zipped Pulse Plugin for Brightcove Player SDK framework from the [releases page][bcovpulsereleases].
+1. Download the [PulseSDK](https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html) framework.
+1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Embedded Binaries**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of **Embedded Binaries**. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add PulseSDK.framework from the INVIDI Technologies download to the list of **Embedded Binaries**. The _Embed_ setting for the framework must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
 1. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
@@ -52,8 +56,8 @@ Imports
 The Pulse Plugin for Brightcove Player SDK can be imported into code a few different ways; `@import BrightcovePulse;`, `#import <BrightcovePulse/BrightcovePulse.h>` or `#import <BrightcovePulse/[specific class].h>`. You can import the `PulseSDK` and `BrightcovePlayerSDK` modules in similar fashion.
 
 [cocoapods]: http://cocoapods.org
-[podspecs]: https://github.com/brightcove/BrightcoveSpecs/tree/master/Brightcove-Player-IMA
-[release]: https://github.com/brightcove/brightcove-player-sdk-ios-ima/releases
+[podspecs]: https://github.com/brightcove/BrightcoveSpecs/tree/master/Brightcove-Player-Pulse
+[release]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse/releases
 
 Quick Start
 ==========
@@ -67,7 +71,6 @@ The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdk] and the [Bri
         OORequestSettings *requestSettings = [OORequestSettings new];
         requestSettings.linearPlaybackPositions = @[ @(position1), ];
     
-        UIView *videoContainerView = <UIView of video container>;
         NSString *pulseHost = <pulse domain>;
     
     [2] NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey:self };
@@ -77,7 +80,7 @@ The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdk] and the [Bri
     [3]         [manager createPulsePlaybackControllerWithPulseHost:pulseHost
                                                     contentMetadata:contentMetadata
                                                     requestSettings:requestSettings
-                                                        adContainer:videoContainerView 
+                                                        adContainer:self.playerView.contentOverlayView
                                                      companionSlots:nil
                                                        viewStrategy:nil
                                                             options:pulseOptions];
@@ -111,24 +114,22 @@ If you have questions or need help, we have a support forum for Brightcove's nat
 
 [invidipulse]: http://pulse-sdks.videoplaza.com/ios_2/latest/
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
+[bcovsdkreleases]: https://github.com/brightcove/brightcove-player-sdk-ios/releases
 [bcovpulse]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse
+[bcovpulsereleases]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse/releases
 [forum]: https://groups.google.com/forum/#!forum/brightcove-native-player-sdks
 
 Play and Pause
 ==========
-The Brightcove Pulse Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the `BCOVPlaybackController` or the `-[BCOVSessionProviderExtension pulse_play]` or `-[BCOVSessionProviderExtension pulse_pause]` ([BCOVSessionProviderExtension][BCOVIMAComponent]), and not the AVPlayer.
+The Brightcove Pulse Plugin implements custom play and pause logic to ensure the smoothest possible ad experience. Therefore, you will need to make sure that you use the play method on the `BCOVPlaybackController` or the `-[BCOVSessionProviderExtension pulse_play]` or `-[BCOVSessionProviderExtension pulse_pause]` ([BCOVSessionProviderExtension][BCOVPulseComponent]), and not the AVPlayer.
 
-As an example, calling play for the first time on `BCOVPlaybackController` allows BCOVIMA to process preroll ads without any of the content playing before the preroll. For more information on how BCOVIMA overrides the default `BCOVPlaybackController` methods, please check out [BCOVSessionProviderExtension][BCOVPulseComponent].
+As an example, calling play for the first time on `BCOVPlaybackController` allows BCOVPulse to process preroll ads without any of the content playing before the preroll. For more information on how BCOVPulse overrides the default `BCOVPlaybackController` methods, please check out [BCOVSessionProviderExtension][BCOVPulseComponent].
 
 [BCOVPulseComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse/blob/master/ios/BrightcovePulse.framework/Headers/BCOVPulseComponent.h
 
 Using the Built-In PlayerUI
 ==========
-If you are using version 5.1 or later of the Brightcove Player SDK, you can take advantage of the built-in player controls with the Brightcove Pulse plugin.
-
-**Note:** The `BrightcovePlayerUI` module is no longer needed and has been removed. (Prior to version 5.1 of the Brightcove Player SDK, the Brightcove PlayerUI plugin was a separate framework and module.) You can remove any imports that reference the Brightcove PlayerUI module. All PlayerUI headers are now found in the `BrightcovePlayerSDK` module.
-
-In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where IMA can display its ads.
+In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where Pulse can display its ads.
 
 ```
 // PlayerUI's player view
@@ -174,7 +175,7 @@ id<BCOVPlaybackController> controller =
                 [manager createPulsePlaybackControllerWithPulseHost:pulseHost
                                                     contentMetadata:contentMetadata
                                                     requestSettings:requestSettings
-                                                        adContainer:videoContainerView 
+                                                        adContainer:self.playerView.contentOverlayView
                                                      companionSlots:nil
                                                        viewStrategy:nil
                                                             options:nil];
@@ -219,6 +220,16 @@ If you are using more than one plugin to the Brightcove Player SDK for iOS that 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider].
 
 [basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
+
+
+Known Issues
+==========
+
+* Some ad lifecycle events are not being passed to the playback session consumer.
+
+* iOS ad controls are missing the ad break remaining time label.
+
+* Calling `[BCOVPlaybackController play]` from the completion handler of `seekWithoutAds:completionHandler:` can cause ad cue points to be ignored. Instead, allow the end user to tap Play to resume playback after seekWithoutAds.
 
 
 Frequently Asked Questions

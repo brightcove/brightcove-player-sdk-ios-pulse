@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>BCOVPulsePlaybackSessionDelegate Protocol Reference</title>
+	<title>BCOVPulseSessionProvider Class Reference</title>
 
 	<link rel="stylesheet" href="../css/style.css">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
@@ -60,7 +60,7 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/createSessionForVideo:withPulseHost:contentMetdata:requestSettings:">- createSessionForVideo:withPulseHost:contentMetdata:requestSettings:</option>
+		<option value="//api/name/requestSessionExtensionWithContentMetadata:requestSettings:success:">- requestSessionExtensionWithContentMetadata:requestSettings:success:</option>
 		
 	</optgroup>
 	
@@ -77,16 +77,19 @@
 		<div id="overview_contents" class="container">
 			<div id="content">
 				<main role="main">
-					<h1 class="title">BCOVPulsePlaybackSessionDelegate Protocol Reference</h1>
+					<h1 class="title">BCOVPulseSessionProvider Class Reference</h1>
 
 					
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
-	<th>Conforms to</th>
+	<th>Inherits from</th>
 	<td>NSObject</td>
 </tr><tr>
+	<th>Conforms to</th>
+	<td>BCOVPlaybackSessionProvider</td>
+</tr><tr>
 	<th>Declared in</th>
-	<td>BCOVPulseComponent.h</td>
+	<td>BCOVPulseSessionProvider.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -96,9 +99,12 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>A delegate protocol for users of the Brightcove Pulse advertising plugin.
-This delegate allows you to override the content metadata and request settings
-dynamically, and customize your response to clickthrough events.</p>
+						<p>Session provider implementation that delivers playback sessions with support
+for Pulse.</p>
+
+<p>Instances of this class should not be created directly by clients of the
+Brightcove Player SDK for iOS; instead use the <code>[BCOVPlayerSDKManager initWithPulseHost:contentMetadata:contentMetadata:upstreamSessionProvider:options:]</code>
+factory method (which is added as a category method).</p>
 					</div>
 					
 					
@@ -114,8 +120,8 @@ dynamically, and customize your response to clickthrough events.</p>
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/createSessionForVideo:withPulseHost:contentMetdata:requestSettings:" title="createSessionForVideo:withPulseHost:contentMetdata:requestSettings:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/createSessionForVideo:withPulseHost:contentMetdata:requestSettings:">&ndash;&nbsp;createSessionForVideo:withPulseHost:contentMetdata:requestSettings:</a></code>
+	<a name="//api/name/requestSessionExtensionWithContentMetadata:requestSettings:success:" title="requestSessionExtensionWithContentMetadata:requestSettings:success:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/requestSessionExtensionWithContentMetadata:requestSettings:success:">&ndash;&nbsp;requestSessionExtensionWithContentMetadata:requestSettings:success:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -125,16 +131,38 @@ dynamically, and customize your response to clickthrough events.</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Called immediately before the Pulse Plugin calls OOPulse -startSessionWithDelegate:
-to allow the user to first modify the ads request object, for example, to change
-the category property. This method is optional.</p>
+				<p>Requests an extension of the current session.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (id&lt;OOPulseSession&gt;)createSessionForVideo:(BCOVVideo *)<em>video</em> withPulseHost:(NSString *)<em>pulseHost</em> contentMetdata:(OOContentMetadata *)<em>contentMetadata</em> requestSettings:(OORequestSettings *)<em>requestSettings</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)requestSessionExtensionWithContentMetadata:(OOContentMetadata *)<em>contentMetadata</em> requestSettings:(OORequestSettings *)<em>requestSettings</em> success:(void ( ^ ) ( void ))<em>onSuccess</em></code></div>
 
 		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>contentMetadata</code></th>
+						<td><p>An OOContentMetadata that will be used to extend the
+current session object.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>requestSettings</code></th>
+						<td><p>An OORequestSettings that will be used to extend the
+current session.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>onSuccess</code></th>
+						<td><p>A success block if the session was successfully extended.</p></td>
+					</tr>
+				
+				</table>
+			</div>
 			
 
 			
@@ -144,9 +172,7 @@ the category property. This method is optional.</p>
 			
 			<div class="method-subsection discussion-section">
 				<h4 class="method-subtitle">Discussion</h4>
-				<p>Called immediately before the Pulse Plugin calls OOPulse -startSessionWithDelegate:
-to allow the user to first modify the ads request object, for example, to change
-the category property. This method is optional.</p>
+				<p>Requests an extension of the current session.</p>
 			</div>
 			
 
@@ -157,7 +183,7 @@ the category property. This method is optional.</p>
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">BCOVPulseComponent.h</code></p>
+				<p><code class="declared-in-ref">BCOVPulseSessionProvider.h</code></p>
 			</div>
 			
 			
