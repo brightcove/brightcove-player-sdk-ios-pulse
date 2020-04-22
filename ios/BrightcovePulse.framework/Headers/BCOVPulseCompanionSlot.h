@@ -14,6 +14,7 @@
 /**
  * The designated initializer.
  *
+ * @param view The UIView to display the ad companion.
  * @param width The width of the companion ad to match.
  * @param height The height of the companion ad to match.
  * @return An intialized instance.

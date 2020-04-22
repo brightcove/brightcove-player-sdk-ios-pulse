@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.4.1018
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.5.1079
 
 Requirements
 ============
@@ -15,12 +15,12 @@ Installation
 ==========
 Pulse Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.5.20.1.0 for iOS and version 2.5.19.9.0 for tvOS. The Podspec for the Pulse Plugin for Brightcove Player SDK references [Pulse SDK Release History](http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html). 
+The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.5.20.1.0 for iOS and version 2.5.19.9.0 for tvOS, [Pulse iOS and tvOS SDK Reference][pulselatest]. The Podspec for the Pulse Plugin for Brightcove Player SDK references [Pulse SDK Release History][pulsesdkchangelog]. 
 
 CocoaPods
 ----------
 
-You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-Pulse` podspec [here][podspecs]. The PulseSDK needs to be added to your project, download the latest version [here](https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html). CocoaPods 1.0 or newer is required.
+You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player SDK to your project.  You can find the latest `Brightcove-Player-Pulse` podspec [here][podspecs]. The PulseSDK needs to be added to your project, download the latest version [here][pulsesdkresource]. CocoaPods 1.0 or newer is required.
 
 CocoaPod Podfile example:
 
@@ -43,10 +43,10 @@ To add the Pulse Plugin for Brightcove Player SDK to your project manually:
 
 1. Download the latest zipped Brightcove Player SDK framework from the [releases page][bcovsdkreleases].
 1. Download the latest zipped Pulse Plugin for Brightcove Player SDK framework from the [releases page][bcovpulsereleases].
-1. Download the [PulseSDK](https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html) framework.
-1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Embedded Binaries**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download. The _Embed_ setting for the framework must be "_Embed & Sign_".
-1. On the "General" tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of **Embedded Binaries**. The _Embed_ setting for the framework must be "_Embed & Sign_".
-1. On the "General" tab of your application target, add PulseSDK.framework from the INVIDI Technologies download to the list of **Embedded Binaries**. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. Download the [PulseSDK][pulsesdkresource] framework.
+1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add PulseSDK.framework from the INVIDI Technologies download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the framework must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
 1. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
@@ -61,19 +61,21 @@ The Pulse Plugin for Brightcove Player SDK can be imported into code a few diffe
 
 Quick Start
 ==========
-The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdk] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with Server Side Ad Rules.
+The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdkresource] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with Server Side Ad Rules.
 
     [1] OOContentMetadata *contentMetadata = [OOContentMetadata new];
         contentMetadata.category = <category>;
-        contentMetadata.tags     = @[ <tag1>, <tag2>, <tag3> ];
-        contentMetadata.flags    = @[ <flag1> ];
+        contentMetadata.tags     = @[ <tag1>, <tag2>, ..., <tagN> ];
+        contentMetadata.flags    = @[ <flag1>, <flag2>, ..., <flagN> ];
 
         OORequestSettings *requestSettings = [OORequestSettings new];
-        requestSettings.linearPlaybackPositions = @[ @(position1), ];
+        requestSettings.linearPlaybackPositions = @[ @(position1), @(position2), ..., @(positionN) ];
     
         NSString *pulseHost = <pulse domain>;
     
-    [2] NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey:self };
+    [2] NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self,
+                                        kBCOVPulseOptionPulsePersistentIdKey: [NSUUID.UUID UUIDString]
+                                      };
 
         BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
         id<BCOVPlaybackController> controller =
@@ -98,21 +100,21 @@ The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdk] and the [Bri
                                    completion:^(BCOVVideo    *video,
                                                 NSDictionary *jsonResponse,
                                                 NSError      *error) {
-
             [controller setVideos:@[ video ]];
             [controller play];
-
         }];
 
 Breaking the code down into steps:
 
-1. Create the same OOContentMetadata, OORequestSettings that you would create if you were using INVIDI Technologies's Pulse iOS SDK directly. The Pulse Plugin requires a valid domain and an UIView container to display the ads.
-2. Optionally, the plugin can receive a NSDictionary with properties to be used in the plugin. The available keys are kBCOVPulseOptionPulsePlaybackSessionDelegateKey,  kBCOVPulseOptionPulseDeviceContainerKey and kBCOVPulseOptionPulsePersistentIdKey. To override the Pulse Session, the PulsePlaybackSessionDelegate needs to be implemented, passing the `kBCOVPulseOptionPulsePlaybackSessionDelegateKey` with the class that implements the methods.
+1. Create the same [OOContentMetadata](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OOContentMetadata.html), [OORequestSettings](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OORequestSettings.html) that you would create if you were using INVIDI Technologies's Pulse iOS SDK directly. The Pulse Plugin requires a valid domain and an UIView container to display the ads.
+2. Optionally, the plugin can receive a NSDictionary with properties to be used in the plugin. The available keys are `kBCOVPulseOptionPulsePlaybackSessionDelegateKey`, `kBCOVPulseOptionPulseDeviceContainerKey` and `kBCOVPulseOptionPulsePersistentIdKey`. To override the Pulse Session, the PulsePlaybackSessionDelegate needs to be implemented, passing the `kBCOVPulseOptionPulsePlaybackSessionDelegateKey` with the class that implements the method.
 3. BrightcovePulse adds some category methods to BCOVPlaybackManager. The first of these is `-createPulsePlaybackControllerWithPulseHost:contentMetadata:requestSettings:adContainer:companionSlots:viewStrategy:options:`. Use this method to create your playback controller. 
 
 If you have questions or need help, we have a support forum for Brightcove's native Player SDKs at the [Brightcove Native Player SDKs][forum] Google group.
 
-[invidipulse]: http://pulse-sdks.videoplaza.com/ios_2/latest/
+[pulselatest]: http://pulse-sdks.videoplaza.com/ios_2/latest/
+[pulsesdkresource]: https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html
+[pulsesdkchangelog]: http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [bcovsdkreleases]: https://github.com/brightcove/brightcove-player-sdk-ios/releases
 [bcovpulse]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse
@@ -196,7 +198,56 @@ The PlayerUI is highly customizable. For more information and sample code, pleas
 
 Customizing Plugin Behavior
 ==========
-There are a couple of configuration points in BCOVPulse. You can combine BCOVPulse with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can supply a custom ads request policy.
+There are a couple of configuration points in BCOVPulse. You can combine BCOVPulse with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can override the current ads request.
+
+BCOVPulsePlaybackSessionDelegate
+----------
+The `BCOVPulsePlaybackSessionDelegate` protocol provides a way for the BrightcovePulse plugin to communicate with the host application. This delegate allows you to override the content metadata and request settings before the session starts. 
+
+The `UIViewController` needs to adopt the `BCOVPulsePlaybackSessionDelegate` protocol.
+
+```
+@interface ViewController () <BCOVPulsePlaybackSessionDelegate>
+```
+
+Create a NSDictionary passing the `kBCOVPulseOptionPulsePlaybackSessionDelegateKey` with the class that will implement the method to override the session.
+
+```
+NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self };
+```
+
+Create a `BCOVPlaybackSessionProvider` or `BCOVPlaybackController` for Pulse using the methods in `BCOVPlaybackManager`, remember to pass the dictionary created in the previous step. This example uses a playback controller.
+
+```
+BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
+id<BCOVPlaybackController> controller = 
+            [manager createPulsePlaybackControllerWithPulseHost:pulseHost
+                                                contentMetadata:[OOContentMetadata new]
+                                                requestSettings:[OORequestSettings new]
+                                                    adContainer:self.playerView.contentOverlayView
+                                                 companionSlots:nil
+                                                   viewStrategy:nil
+                                                        options:pulseOptions];
+```
+[category]: http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OOContentMetadata.html#/c:objc(cs)OOContentMetadata(py)category
+[linearplaybackpositions]: http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OORequestSettings.html#/c:objc(cs)OORequestSettings(py)linearPlaybackPositions
+
+The `createSessionForVideo:withPulseHost:contentMetadata:requestSettings:` method provides the current video, host domain, [content metadata](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OOContentMetadata.html) and [request settings](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OORequestSettings.html) for the session. In this example, the previous objects were empty and will be overriden with a new [category][category] and [linear playback positions][linearplaybackpositions] array.
+
+ ```
+ - (id<OOPulseSession>)createSessionForVideo:(BCOVVideo *)video 
+                               withPulseHost:(NSString *)pulseHost 
+                              contentMetadata:(OOContentMetadata *)contentMetadata 
+                             requestSettings:(OORequestSettings *)requestSettings
+  { 
+    // Override the content metadata.
+    contentMetadata.category = @"new_category_for_midrolls";
+    
+    // Override the request settings.
+    requestSettings.linearPlaybackPositions = @[ @(15) ];
+    return [OOPulse sessionWithContentMetadata:contentMetadata requestSettings:requestSettings];
+}
+```
 
 View Strategy
 ----------
