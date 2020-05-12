@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.5.1079
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.7.6.1121
 
 Requirements
 ============
@@ -271,16 +271,6 @@ If you are using more than one plugin to the Brightcove Player SDK for iOS that 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider].
 
 [basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
-
-
-Known Issues
-==========
-
-* Some ad lifecycle events are not being passed to the playback session consumer.
-
-* iOS ad controls are missing the ad break remaining time label.
-
-* Calling `[BCOVPlaybackController play]` from the completion handler of `seekWithoutAds:completionHandler:` can cause ad cue points to be ignored. Instead, allow the end user to tap Play to resume playback after seekWithoutAds.
 
 
 Frequently Asked Questions
