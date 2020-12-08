@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.8.1.1355
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.8.2.1421
 
 Requirements
 ============
@@ -109,8 +109,6 @@ Breaking the code down into steps:
 1. Create the same [OOContentMetadata](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OOContentMetadata.html), [OORequestSettings](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OORequestSettings.html) that you would create if you were using INVIDI Technologies's Pulse iOS SDK directly. The Pulse Plugin requires a valid domain and an UIView container to display the ads.
 2. Optionally, the plugin can receive a NSDictionary with properties to be used in the plugin. The available keys are `kBCOVPulseOptionPulsePlaybackSessionDelegateKey`, `kBCOVPulseOptionPulseDeviceContainerKey` and `kBCOVPulseOptionPulsePersistentIdKey`. To override the Pulse Session, the PulsePlaybackSessionDelegate needs to be implemented, passing the `kBCOVPulseOptionPulsePlaybackSessionDelegateKey` with the class that implements the method.
 3. BrightcovePulse adds some category methods to BCOVPlaybackManager. The first of these is `-createPulsePlaybackControllerWithPulseHost:contentMetadata:requestSettings:adContainer:companionSlots:viewStrategy:options:`. Use this method to create your playback controller. 
-
-If you have questions or need help, we have a support forum for Brightcove's native Player SDKs at the [Brightcove Native Player SDKs][forum] Google group.
 
 [pulselatest]: http://pulse-sdks.videoplaza.com/ios_2/latest/
 [pulsesdkresource]: https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html
@@ -278,3 +276,7 @@ Frequently Asked Questions
 _I can hear the ads, but I can't see them playing._
 
 This usually happens when the ad container view is not in the view hierarchy, or when the ad view (which is a subview of the ad container view) is covered by other views.
+
+Support
+=======
+If you have questions, need help or want to provide feedback, please use the [Support Portal](https://supportportal.brightcove.com/s/login/) or contact your Account Manager.  To receive notification of new SDK software releases, subscribe to the Brightcove Native Player SDKs [Google Group](https://groups.google.com/g/brightcove-native-player-sdks).
