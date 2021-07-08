@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.8.7.1605
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.9.0.1697
 
 Requirements
 ============
@@ -111,7 +111,7 @@ Breaking the code down into steps:
 3. BrightcovePulse adds some category methods to BCOVPlaybackManager. The first of these is `-createPulsePlaybackControllerWithPulseHost:contentMetadata:requestSettings:adContainer:companionSlots:viewStrategy:options:`. Use this method to create your playback controller. 
 
 [pulselatest]: http://pulse-sdks.videoplaza.com/ios_2/latest/
-[pulsesdkresource]: https://docs.videoplaza.com/oadtech/ad_serving/dg/pulse_sdks_resources.html
+[pulsesdkresource]: https://github.com/INVIDITechnologies/pulse-sdk-ios-2.x-sample
 [pulsesdkchangelog]: http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html
 [bcovsdk]: https://github.com/brightcove/brightcove-player-sdk-ios
 [bcovsdkreleases]: https://github.com/brightcove/brightcove-player-sdk-ios/releases
