@@ -44,7 +44,7 @@
 					<div class="section section-overview index-overview">
 						
 						
-						<h1>Pulse Plugin for Brightcove Player SDK for iOS, version 6.9.1.1726</h1>
+						<h1>Pulse Plugin for Brightcove Player SDK for iOS, version 6.10.0.1786</h1>
 
 <h1>Requirements</h1>
 
@@ -63,7 +63,7 @@ tvOS 11.0 and above</p>
 
 <p>Pulse Plugin for Brightcove Player SDK provides a dynamic library framework for installation.</p>
 
-<p>The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.5.20.1.0 for iOS and version 2.5.19.9.0 for tvOS, <a href="http://pulse-sdks.videoplaza.com/ios_2/latest/">Pulse iOS and tvOS SDK Reference</a>. The Podspec for the Pulse Plugin for Brightcove Player SDK references <a href="http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html">Pulse SDK Release History</a>.</p>
+<p>The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.6.21.6.0 for iOS and version 2.6.21.6.0 for tvOS, <a href="http://pulse-sdks.videoplaza.com/ios_2/latest/">Pulse iOS and tvOS SDK Reference</a>. The Podspec for the Pulse Plugin for Brightcove Player SDK references <a href="http://pulse-sdks.videoplaza.com/ios_2/latest/changelog.html">Pulse SDK Release History</a>.</p>
 
 <h2>CocoaPods</h2>
 
@@ -71,16 +71,33 @@ tvOS 11.0 and above</p>
 
 <p>CocoaPod Podfile example:</p>
 
-<pre><code>source 'https://github.com/CocoaPods/Specs'
-source 'https://github.com/brightcove/BrightcoveSpecs.git'
+<p>```bash
+source &lsquo;<a href="https://github.com/CocoaPods/Specs" title="">https://github.com/CocoaPods/Specs'</a>
+source &rsquo;<a href="https://github.com/brightcove/BrightcoveSpecs.git" title="">https://github.com/brightcove/BrightcoveSpecs.git'</a></p>
 
-platform :ios, '11.0'
-use_frameworks!
+<p>platform :ios, &lsquo;11.0&rsquo;
+use_frameworks!</p>
 
-target 'MyApp' do
-    pod 'Brightcove-Player-Pulse'
+<p>target &lsquo;MyApp&rsquo; do
+    pod &lsquo;Brightcove-Player-Pulse&rsquo;
 end
-</code></pre>
+```</p>
+
+<p>XCFramework will be installed appending the <code>/XCFramework</code> subspec in the pod.</p>
+
+<p>XCFramework example:</p>
+
+<p>```bash
+source &lsquo;https://github.com/CocoaPods/Specs&rsquo;
+source &lsquo;https://github.com/brightcove/BrightcoveSpecs.git&rsquo;</p>
+
+<p>platform :ios, &lsquo;11.0&rsquo;
+use_frameworks!</p>
+
+<p>target &lsquo;MyApp&rsquo; do
+    pod &lsquo;Brightcove-Player-Pulse/XCFramework&rsquo;
+end
+```</p>
 
 <h2>Manual</h2>
 
@@ -88,16 +105,23 @@ end
 
 <ol>
 <li>Download the latest zipped Brightcove Player SDK framework from the <a href="https://github.com/brightcove/brightcove-player-sdk-ios/releases">releases page</a>.</li>
-<li>Download the latest zipped Pulse Plugin for Brightcove Player SDK framework from the <a href="https://github.com/brightcove/brightcove-player-sdk-ios-pulse/releases">releases page</a>.</li>
-<li>Download the <a href="https://github.com/INVIDITechnologies/pulse-sdk-ios-2.x-sample">PulseSDK</a> framework.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download. The <em>Embed</em> setting for the framework must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting for the framework must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
-<li>On the &ldquo;General&rdquo; tab of your application target, add PulseSDK.framework from the INVIDI Technologies download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting for the framework must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
+<li>Download the latest zip'ed release of the BrightcovePulse plugin from our <a href="https://github.com/brightcove/brightcove-player-sdk-ios-pulse/releases">release page</a>.</li>
+<li>Download the <a href="https://github.com/INVIDITechnologies/pulse-sdk-ios-2.x-sample">PulseSDK</a>.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add the <strong>dynamic</strong> framework, <code>BrightcovePlayerSDK.framework</code> or <code>BrightcovePlayerSDK.xcframework</code>, from the Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The universal Framework and XCFramework are found in the ios/dynamic directory of the download. The <em>Embed</em> setting must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add <code>BrightcovePulse.framework</code> or <code>BrightcovePulse.xcframework</code> from the Pulse Plugin for Brightcove Player SDK download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
+<li>On the &ldquo;General&rdquo; tab of your application target, add <code>PulseSDK.xcframework</code> and <code>OMSDK_Invidi.xcframework</code> from the INVIDI Technologies download to the list of <strong>Frameworks, Libraries, and Embedded Content</strong>. The <em>Embed</em> setting for the XCFrameworks must be &ldquo;<em>Embed &amp; Sign</em>&rdquo;.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target, ensure that the &ldquo;Framework Search Paths&rdquo; include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.</li>
+<li>(<strong>Universal Framework</strong> only) On the &ldquo;Build Phases&rdquo; tab, add a &ldquo;Run Script&rdquo; phase with the command <code>bash ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightcovePulse.framework/strip-frameworks.sh</code>. Check &ldquo;Run script only when installing&rdquo;. This will remove unneeded architectures from the build, which is important for App Store submission.</li>
 <li>On the &ldquo;Build Settings&rdquo; tab of your application target:
 
 <ul>
 <li>Ensure that <code>-ObjC</code> has been added to the &ldquo;Other Linker Flags&rdquo; build setting.</li>
+</ul>
+</li>
+<li>(<strong>Apple Silicon with Universal Framework</strong> only) On the &ldquo;Build Settings&rdquo; tab of your application target:
+
+<ul>
+<li>Ensure that <code>arm64</code> has been added to your &ldquo;Excluded Architectures&rdquo; build setting for <code>Any iOS Simulator SDK</code>.</li>
 </ul>
 </li>
 </ol>
@@ -298,6 +322,28 @@ id&lt;BCOVPlaybackController&gt; controller =
 
 <p>When composing session providers, the session preloading can be enabled from <a href="https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46"><code>BCOVBasicSessionProvider</code></a>.</p>
 
+<h1>AVPlayerViewController Support</h1>
+
+<p><strong>Displaying Ad UI</strong></p>
+
+<p>If you&rsquo;d like to display your own Ad UI during ad playback you can use the <code>playbackController:playbackSession:didEnterAd:</code>  and <code>playbackController:playbackSession:didExitAdSequence:</code>  delegate methods. Here is an example:</p>
+
+<pre><code>#pragma mark BCOVPlaybackControllerDelegate
+
+- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didEnterAd:(BCOVAd *)ad
+{
+    NSTimeInterval duration = CMTimeGetSeconds(ad.duration);
+    [self displayAdUI:duration];
+}
+
+- (void)playbackController:(id&lt;BCOVPlaybackController&gt;)controller playbackSession:(id&lt;BCOVPlaybackSession&gt;)session didExitAdSequence:(BCOVAdSequence *)adSequence
+{
+    ...
+
+    [self hideAdUI];
+}
+</code></pre>
+
 <h1>Frequently Asked Questions</h1>
 
 <p><em>I can hear the ads, but I can&rsquo;t see them playing.</em></p>
@@ -360,7 +406,7 @@ id&lt;BCOVPlaybackController&gt; controller =
 					<footer>
 						<div class="footer-copyright">
 							
-							<p class="copyright">Copyright &copy; 2021 Brightcove. All rights reserved. Updated: 2021-08-16</p>
+							<p class="copyright">Copyright &copy; 2021 Brightcove. All rights reserved. Updated: 2021-09-27</p>
 							
 							
 							<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

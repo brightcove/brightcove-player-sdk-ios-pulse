@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.9.1.1726
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.10.0.1786
 
 Requirements
 ============
@@ -15,7 +15,7 @@ Installation
 ==========
 Pulse Plugin for Brightcove Player SDK provides a dynamic library framework for installation.
 
-The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.5.20.1.0 for iOS and version 2.5.19.9.0 for tvOS, [Pulse iOS and tvOS SDK Reference][pulselatest]. The Podspec for the Pulse Plugin for Brightcove Player SDK references [Pulse SDK Release History][pulsesdkchangelog]. 
+The Pulse plugin supports INVIDI Technologies Pulse SDK version 2.6.21.6.0 for iOS and version 2.6.21.6.0 for tvOS, [Pulse iOS and tvOS SDK Reference][pulselatest]. The Podspec for the Pulse Plugin for Brightcove Player SDK references [Pulse SDK Release History][pulsesdkchangelog].
 
 CocoaPods
 ----------
@@ -24,7 +24,7 @@ You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player
 
 CocoaPod Podfile example:
 
-```
+```bash
 source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
@@ -36,20 +36,39 @@ target 'MyApp' do
 end
 ```
 
+XCFramework will be installed appending the `/XCFramework` subspec in the pod.
+
+XCFramework example:
+
+```bash
+source 'https://github.com/CocoaPods/Specs'
+source 'https://github.com/brightcove/BrightcoveSpecs.git'
+
+platform :ios, '11.0'
+use_frameworks!
+
+target 'MyApp' do
+	pod 'Brightcove-Player-Pulse/XCFramework'
+end
+```
+
 Manual
 ----------
 
 To add the Pulse Plugin for Brightcove Player SDK to your project manually:
 
 1. Download the latest zipped Brightcove Player SDK framework from the [releases page][bcovsdkreleases].
-1. Download the latest zipped Pulse Plugin for Brightcove Player SDK framework from the [releases page][bcovpulsereleases].
-1. Download the [PulseSDK][pulsesdkresource] framework.
-1. On the "General" tab of your application target, add the **dynamic** framework, BrightcovePlayerSDK.framework, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The dynamic framework, BrightcovePlayerSDK.framework, is found in the ios/dynamic directory of the download. The _Embed_ setting for the framework must be "_Embed & Sign_".
-1. On the "General" tab of your application target, add BrightcovePulse.framework from the Pulse Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the framework must be "_Embed & Sign_".
-1. On the "General" tab of your application target, add PulseSDK.framework from the INVIDI Technologies download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the framework must be "_Embed & Sign_".
+1. Download the latest zip'ed release of the BrightcovePulse plugin from our [release page][release].
+1. Download the [PulseSDK][pulsesdkresource].
+1. On the "General" tab of your application target, add the **dynamic** framework, `BrightcovePlayerSDK.framework` or `BrightcovePlayerSDK.xcframework`, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The universal Framework and XCFramework are found in the ios/dynamic directory of the download. The _Embed_ setting must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add `BrightcovePulse.framework` or `BrightcovePulse.xcframework` from the Pulse Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add `PulseSDK.xcframework` and `OMSDK_Invidi.xcframework` from the INVIDI Technologies download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the XCFrameworks must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
+1. (**Universal Framework** only) On the "Build Phases" tab, add a "Run Script" phase with the command `bash ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrightcovePulse.framework/strip-frameworks.sh`. Check "Run script only when installing". This will remove unneeded architectures from the build, which is important for App Store submission.
 1. On the "Build Settings" tab of your application target:
     * Ensure that `-ObjC` has been added to the "Other Linker Flags" build setting.
+1. (**Apple Silicon with Universal Framework** only) On the "Build Settings" tab of your application target:
+    * Ensure that `arm64` has been added to your "Excluded Architectures" build setting for `Any iOS Simulator SDK`.
 
 Imports
 ----------
@@ -270,6 +289,29 @@ When composing session providers, the session preloading can be enabled from [`B
 
 [basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
 
+AVPlayerViewController Support
+==========================
+
+**Displaying Ad UI**
+
+If you'd like to display your own Ad UI during ad playback you can use the `playbackController:playbackSession:didEnterAd:`  and `playbackController:playbackSession:didExitAdSequence:`  delegate methods. Here is an example:
+
+```
+#pragma mark BCOVPlaybackControllerDelegate
+
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAd:(BCOVAd *)ad
+{
+    NSTimeInterval duration = CMTimeGetSeconds(ad.duration);
+    [self displayAdUI:duration];
+}
+
+- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
+{
+    ...
+
+    [self hideAdUI];
+}
+```
 
 Frequently Asked Questions
 ==========
