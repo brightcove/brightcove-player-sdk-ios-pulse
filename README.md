@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.10.6.2156
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.11.0.2264
 
 ## Installation
 
@@ -309,6 +309,11 @@ If you'd like to display your own Ad UI during ad playback you can use the `play
     [self hideAdUI];
 }
 ```
+
+## Picture-in-Picture
+
+The Brightcove Pulse plugin does not currently support Picture-in-Picture. Attempting to use Picture-in-Picture functionality with the Pulse plugin will result in unexpected behavior.
+
 
 ## Frequently Asked Questions
 
