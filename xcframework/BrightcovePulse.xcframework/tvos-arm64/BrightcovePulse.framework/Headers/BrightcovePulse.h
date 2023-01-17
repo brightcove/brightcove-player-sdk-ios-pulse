@@ -2,7 +2,7 @@
 // BrightcovePulse.h
 // BrightcovePulse
 //
-// Copyright (c) 2022 Brightcove, Inc. All rights reserved.
+// Copyright (c) 2023 Brightcove, Inc. All rights reserved.
 // License: https://accounts.brightcove.com/en/terms-and-conditions
 //
 

@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.11.2.2333
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.12.0.2391
 
 ## Installation
 
@@ -67,7 +67,7 @@ To add the Pulse Plugin for Brightcove Player SDK to your project with Swift Pac
 1. On the "General" tab of your application target, add `PulseSDK.xcframework` and `OMSDK_Invidi.xcframework` from the INVIDI Technologies download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the XCFrameworks must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
 
-[corespm]: https://github.com/brightcove/brightcove-player-sdk-ios#SwiftPackageManager
+[corespm]: https://github.com/brightcove/brightcove-player-sdk-ios#swift-package-manager
 
 ### Imports
 
