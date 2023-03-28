@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.12.0.2391
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.12.1.2421
 
 ## Installation
 
@@ -113,11 +113,14 @@ The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdkresource] and 
         NSString *videoID = <your-video-id>;
         BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID
                                                                                     policyKey:policyKey];
-        [playbackService findVideoWithVideoID:videoID
-                                   parameters:nil
-                                   completion:^(BCOVVideo    *video,
-                                                NSDictionary *jsonResponse,
-                                                NSError      *error) {
+        NSDictionary *configuration = @{
+            kBCOVPlaybackServiceConfigurationKeyAssetID:videoID
+        };
+        [playbackService findVideoWithConfiguration:configuration
+                                    queryParameters:nil
+                                         completion:^(BCOVVideo    *video,
+                                                      NSDictionary *jsonResponse,
+                                                      NSError      *error) {
             [controller setVideos:@[ video ]];
             [controller play];
         }];
