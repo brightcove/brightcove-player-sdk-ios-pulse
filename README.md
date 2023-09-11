@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.12.3.2490
+# Pulse Plugin for Brightcove Player SDK for iOS, version 6.12.4.2514
 
 ## Installation
 
@@ -16,7 +16,7 @@ You can use [CocoaPods][cocoapods] to add the Pulse Plugin for Brightcove Player
 source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
-platform :ios, '11.4'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'MyApp' do
@@ -32,7 +32,7 @@ XCFramework can be installed by appending the `/XCFramework` subspec in the pod 
 source 'https://github.com/CocoaPods/Specs'
 source 'https://github.com/brightcove/BrightcoveSpecs.git'
 
-platform :ios, '11.4'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'MyApp' do
