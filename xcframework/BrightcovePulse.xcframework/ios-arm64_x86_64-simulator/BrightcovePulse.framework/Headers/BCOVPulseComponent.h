@@ -6,7 +6,7 @@
 // License: https://accounts.brightcove.com/en/terms-and-conditions
 //
 
-#import <BrightcovePlayerSDK/BrightcovePlayerSDK.h>
+@import BrightcovePlayerSDK;
 
 @class OOContentMetadata;
 @class OORequestSettings;

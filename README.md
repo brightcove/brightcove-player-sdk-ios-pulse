@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 6.13.3.8
+# Pulse Plugin for Brightcove Player SDK for iOS, version 7.0.0.9
 
 ## Installation
 
@@ -71,7 +71,10 @@ To add the Pulse Plugin for Brightcove Player SDK to your project with Swift Pac
 
 ### Imports
 
-The Pulse Plugin for Brightcove Player SDK can be imported into code a few different ways; `@import BrightcovePulse;`, `#import <BrightcovePulse/BrightcovePulse.h>` or `#import <BrightcovePulse/[specific class].h>`. You can import the `PulseSDK` and `BrightcovePlayerSDK` modules in similar fashion.
+The Pulse Plugin for Brightcove Player SDK can be imported using:
+```swift
+import BrightcovePulse
+```
 
 [cocoapods]: http://cocoapods.org
 [podspecs]: https://github.com/brightcove/BrightcoveSpecs/tree/master/Brightcove-Player-Pulse
@@ -81,49 +84,57 @@ The Pulse Plugin for Brightcove Player SDK can be imported into code a few diffe
 
 The BrightcovePulse plugin is a bridge between [PulseSDK][pulsesdkresource] and the [Brightcove Player SDK for iOS][bcovsdk]. This snippet shows its basic usage with Server Side Ad Rules.
 
-    [1] OOContentMetadata *contentMetadata = [OOContentMetadata new];
-        contentMetadata.category = <category>;
-        contentMetadata.tags     = @[ <tag1>, <tag2>, ..., <tagN> ];
-        contentMetadata.flags    = @[ <flag1>, <flag2>, ..., <flagN> ];
+```swift
+[1] let contentMetadata = OOContentMetadata()
+    contentMetadata.category = "<category>"
+    contentMetadata.tags = ["<tag1>", "<tag2>"]
+    contentMetadata.flags = ["<flag1>", "<flag2>"]
 
-        OORequestSettings *requestSettings = [OORequestSettings new];
-        requestSettings.linearPlaybackPositions = @[ @(position1), @(position2), ..., @(positionN) ];
-    
-        NSString *pulseHost = <pulse domain>;
-    
-    [2] NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self,
-                                        kBCOVPulseOptionPulsePersistentIdKey: [NSUUID.UUID UUIDString]
-                                      };
+    let requestSettings = OORequestSettings()
+    requestSettings.linearPlaybackPositions = [30, 60]
 
-        BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
-        id<BCOVPlaybackController> controller =
-    [3]         [manager createPulsePlaybackControllerWithPulseHost:pulseHost
-                                                    contentMetadata:contentMetadata
-                                                    requestSettings:requestSettings
-                                                        adContainer:self.playerView.contentOverlayView
-                                                     companionSlots:nil
-                                                       viewStrategy:nil
-                                                            options:pulseOptions];
-        controller.delegate = self;
+    let pulseHose = "<pulse domain>"
 
-        [videoContainerView addSubview:controller.view];  
+[2] let pulseOptions: [String:Any] = [
+        kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self,
+        kBCOVPulseOptionPulsePersistentIdKey: NSUUID().uuidString
+    ]
 
-        NSString *policyKey = <your-policy-key>;
-        NSString *accountId = <your-account-id>;
-        NSString *videoID = <your-video-id>;
-        BCOVPlaybackService *playbackService = [[BCOVPlaybackService alloc] initWithAccountId:accountID
-                                                                                    policyKey:policyKey];
-        NSDictionary *configuration = @{
-            kBCOVPlaybackServiceConfigurationKeyAssetID:videoID
-        };
-        [playbackService findVideoWithConfiguration:configuration
-                                    queryParameters:nil
-                                         completion:^(BCOVVideo    *video,
-                                                      NSDictionary *jsonResponse,
-                                                      NSError      *error) {
-            [controller setVideos:@[ video ]];
-            [controller play];
-        }];
+    let sdkManager = BCOVPlayerSDKManager.sharedManager()
+[3] let playbackController = sdkManager.createPulsePlaybackController(withPulseHost: pulseHose,
+                                                                  contentMetadata: contentMetadata,
+                                                                  requestSettings: requestSettings,
+                                                                  adContainer: playerView.contentOverlayView,
+                                                                  companionSlots: nil,
+                                                                  viewStrategy: nil,
+                                                                  options: pulseOptions)
+
+    guard let playbackController else {
+        return
+    }
+
+    playbackController.delegate = self
+
+    videoView.addSubview(playerView)
+
+    let policyKey = "<your-policy-key>"
+    let accountID = "<your-account-id>"
+    let videoID = "<your-video-id>"
+    let playbackService = BCOVPlaybackService(withAccountId: accountID,
+                                              policyKey: policyKey)
+    let configuration = [
+        BCOVPlaybackService.ConfigurationKeyAssetID: videoID
+    ]
+    playbackService.findVideo(withConfiguration: configuration,
+                              queryParameters: nil) { (video: BCOVVideo?,
+                                                       jsonResponse: Any?,
+                                                       error: Error?) in
+        if let video {
+            playbackController.setVideos([video])
+            playbackController.play()
+        }
+    }
+```
 
 Breaking the code down into steps:
 
@@ -148,74 +159,6 @@ As an example, calling play for the first time on `BCOVPlaybackController` allow
 
 [BCOVPulseComponent]: https://github.com/brightcove/brightcove-player-sdk-ios-pulse/blob/master/ios/BrightcovePulse.framework/Headers/BCOVPulseComponent.h
 
-## Using the Built-In PlayerUI
-
-In your `UIViewController`, create a `BCOVPUIPlayerView` property called the player view, to contain the playback controls, the video content view, and a special view where Pulse can display its ads.
-
-```
-// PlayerUI's player view
-@property (nonatomic) BCOVPUIPlayerView *playerView;
-```
-
-Then create your player view; supply a nil playback controller which will be added later. This player view contains both the video content view and the view that displays playback controls and ad controls. This setup is the same no matter what plugin you are using. Set up the player view to match the video container from your layout (`videoView`) when it resizes.
-
-```
-// Create and configure Control View.
-BCOVPUIBasicControlView *controlView = [BCOVPUIBasicControlView basicControlViewWithVODLayout];
-    
-// Create the player view with a nil playback controller.
-self.playerView = [[BCOVPUIPlayerView alloc] initWithPlaybackController:nil options:nil controlsView:controlView];
-// Add BCOVPUIPlayerView to your video view.
-[self.videoView addSubview:self.playerView];
-```
-
-You'll need to set up the layout for the player view, you can do this with Auto Layout or the older Springs & Struts method. 
-
-### Springs & Struts
-
-```
-self.playerView.frame = self.videoView.bounds;
-self.playerView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-```
-
-### Auto Layout
-```
-self.playerView.translatesAutoresizingMaskIntoConstraints = NO;
-[NSLayoutConstraint activateConstraints:@[
-                                          [self.playerView.topAnchor constraintEqualToAnchor:self.videoView.topAnchor],
-                                          [self.playerView.rightAnchor constraintEqualToAnchor:self.videoView.rightAnchor],
-                                          [self.playerView.leftAnchor constraintEqualToAnchor:self.videoView.leftAnchor],
-                                          [self.playerView.bottomAnchor constraintEqualToAnchor:self.videoView.bottomAnchor],
-                                         ]];
-```
-
-Creating the playback controller is specific to Pulse. Create your playback controller as you did above, but instead of your video container view, pass in the `contentOverlayView` from the player view as your `adContainer`. The `contentOverlayView` is a special view used for overlaying views on the main video content. You should also use `nil` instead of `[manager defaultControlsViewStrategy]` if you were using that as your `viewStrategy` (this was the older method for using built-in controls).
-
-```
-// Create the playback controller.
-id<BCOVPlaybackController> controller =
-                [manager createPulsePlaybackControllerWithPulseHost:pulseHost
-                                                    contentMetadata:contentMetadata
-                                                    requestSettings:requestSettings
-                                                        adContainer:self.playerView.contentOverlayView
-                                                     companionSlots:nil
-                                                       viewStrategy:nil
-                                                            options:nil];
-controller.delegate = self;
-
-// Assign new playback controller to the player view.
-// This associates the playerController's session with the PlayerUI.
-// You can keep this player view around and assign new
-// playback controllers to it as they are created.
-self.playerView.playbackController = self.playbackController;
-```
-
-Now, when playing video with ads, you will see the PlayerUI controls while playing video content, plus ad markers on the timeline scrubber.
-
-The PlayerUI is highly customizable. For more information and sample code, please see **Custom Layouts** section in the README.md file of the [Brightcove Native Player SDK repository][BCOVSDK].
-
-[BCOVSDK]: https://github.com/brightcove/brightcove-player-sdk-ios
-
 ## Customizing Plugin Behavior
 
 There are a couple of configuration points in BCOVPulse. You can combine BCOVPulse with another plugin for the Brightcove Player SDK for iOS, you can create a custom view strategy, and you can override the current ads request.
@@ -226,69 +169,54 @@ The `BCOVPulsePlaybackSessionDelegate` protocol provides a way for the Brightcov
 
 The `UIViewController` needs to adopt the `BCOVPulsePlaybackSessionDelegate` protocol.
 
-```
-@interface ViewController () <BCOVPulsePlaybackSessionDelegate>
+```swift
+class ViewController: UIViewController, BCOVPulsePlaybackSessionDelegate
 ```
 
 Create a NSDictionary passing the `kBCOVPulseOptionPulsePlaybackSessionDelegateKey` with the class that will implement the method to override the session.
 
-```
-NSDictionary *pulseOptions = @{ kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self };
+```swift
+let pulseOptions = [
+    kBCOVPulseOptionPulsePlaybackSessionDelegateKey: self
+]
 ```
 
 Create a `BCOVPlaybackSessionProvider` or `BCOVPlaybackController` for Pulse using the methods in `BCOVPlaybackManager`, remember to pass the dictionary created in the previous step. This example uses a playback controller.
 
-```
-BCOVPlayerSDKManager *manager = [BCOVPlayerSDKManager sharedManager];
-id<BCOVPlaybackController> controller = 
-            [manager createPulsePlaybackControllerWithPulseHost:pulseHost
-                                                contentMetadata:[OOContentMetadata new]
-                                                requestSettings:[OORequestSettings new]
-                                                    adContainer:self.playerView.contentOverlayView
-                                                 companionSlots:nil
-                                                   viewStrategy:nil
-                                                        options:pulseOptions];
+```swift
+let sdkManager = BCOVPlayerSDKManager.sharedManager()
+let playbackController = sdkManager.createPulsePlaybackController(withPulseHost: pulseHose,
+                                                                  contentMetadata: OOContentMetadata(),
+                                                                  requestSettings: OORequestSettings(),
+                                                                  adContainer: playerView.contentOverlayView,
+                                                                  companionSlots: nil,
+                                                                  viewStrategy: nil,
+                                                                  options: pulseOptions)
 ```
 
 The `createSessionForVideo:withPulseHost:contentMetadata:requestSettings:` method provides the current video, host domain, [content metadata](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OOContentMetadata.html) and [request settings](http://pulse-sdks.videoplaza.com/ios_2/latest/Classes/OORequestSettings.html) for the session. In this example, the previous objects were empty and will be overriden with a new `OOContentMetadata` and `OORequestSettings` array.
 
-```
- - (id<OOPulseSession>)createSessionForVideo:(BCOVVideo *)video 
-                               withPulseHost:(NSString *)pulseHost 
-                              contentMetadata:(OOContentMetadata *)contentMetadata 
-                             requestSettings:(OORequestSettings *)requestSettings
-  { 
+```swift
+func createSession(for video: BCOVVideo,
+                   withPulseHost pulseHost: String,
+                   contentMetadata: OOContentMetadata,
+                   requestSettings: OORequestSettings) -> OOPulseSession {
     // Override the content metadata.
-    contentMetadata.category = @"new_category_for_midrolls";
-    
+    contentMetadata.category = "new_category_for_midrolls"
+
     // Override the request settings.
-    requestSettings.linearPlaybackPositions = @[ @(15) ];
-    return [OOPulse sessionWithContentMetadata:contentMetadata requestSettings:requestSettings];
+    requestSettings.linearPlaybackPositions = [15]
+    return OOPulse.session(with: contentMetadata, requestSettings: requestSettings)
 }
 ```
 
-### View Strategy
-
-You can provide a custom view strategy to the BCOVPlaybackManager when you are constructing your playback controller or session provider, rather than specify the defaultControlsViewStrategy directly. With a custom view strategy, the ad container view and ad companion slots can be tied with the video content view. This is an example of custom view strategy.
-
-    BCOVPlaybackControllerViewStrategy customViewStrategy = ^UIView* (UIView *view, id<BCOVPlaybackController> playbackController){
-        
-        BCOVPlaybackControllerViewStrategy defaultControlsViewStrategy = [playbackManager defaultControlsViewStrategy];
-        UIView *contentAndDefaultControlsView = defaultControlsViewStrategy(view, playbackController);
-        
-        [<UIView of video container> addSubview:contentAndDefaultControlsView];
-        
-        return <UIView of video container>;
-    };
-
-
 ### Composing Session Providers
 
-If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the `-[BCOVPlayerSDKManager createPlaybackControllerWithSessionProvider:viewStrategy:]` method.
+If you are using more than one plugin to the Brightcove Player SDK for iOS that needs to create a customized playback controller, you must instead compose a chain of session providers and pass the final session provider to the `sdkManager.createPlaybackController(withSessionProvider:viewStrategy:)` method.
 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider].
 
-[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/fd5e766693e533854f202f270d3d62e32ceaae04/ios/dynamic/BrightcovePlayerSDK.framework/Headers/BCOVBasicSessionProvider.h#L31-L46
+[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L312-L325
 
 ## AVPlayerViewController Support
 
@@ -296,20 +224,19 @@ When composing session providers, the session preloading can be enabled from [`B
 
 If you'd like to display your own Ad UI during ad playback you can use the `playbackController:playbackSession:didEnterAd:`  and `playbackController:playbackSession:didExitAdSequence:`  delegate methods. Here is an example:
 
-```
-#pragma mark BCOVPlaybackControllerDelegate
+```swift
+// MARK: BCOVPlaybackControllerDelegate
 
-- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didEnterAd:(BCOVAd *)ad
-{
-    NSTimeInterval duration = CMTimeGetSeconds(ad.duration);
-    [self displayAdUI:duration];
+func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didEnter ad: BCOVAd) {
+    displayAdUI(withAdDuration: CMTimeGetSeconds(ad.duration))
 }
 
-- (void)playbackController:(id<BCOVPlaybackController>)controller playbackSession:(id<BCOVPlaybackSession>)session didExitAdSequence:(BCOVAdSequence *)adSequence
-{
-    ...
-
-    [self hideAdUI];
+func playbackController(_ controller: BCOVPlaybackController,
+                        playbackSession session: BCOVPlaybackSession,
+                        didExitAdSequence adSequence: BCOVAdSequence) {
+    hideAdUI()
 }
 ```
 
