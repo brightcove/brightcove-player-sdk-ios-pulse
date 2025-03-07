@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 7.0.1.10
+# Pulse Plugin for Brightcove Player SDK for iOS, version 7.0.2.12
 
 ## Installation
 
@@ -47,7 +47,7 @@ To add the Pulse Plugin for Brightcove Player SDK to your project manually:
 1. Download the latest zipped Brightcove Player SDK framework from the [releases page][bcovsdkreleases].
 1. Download the latest zip'ed release of the BrightcovePulse plugin from our [release page][release].
 1. Download the [PulseSDK][pulsesdkresource].
-1. On the "General" tab of your application target, add the **dynamic** framework, `BrightcovePlayerSDK.framework` or `BrightcovePlayerSDK.xcframework`, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The universal Framework and XCFramework are found in the ios/dynamic directory of the download. The _Embed_ setting must be "_Embed & Sign_".
+1. On the "General" tab of your application target, add the **dynamic** framework, `BrightcovePlayerSDK.framework` or `BrightcovePlayerSDK.xcframework`, from the Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The universal Framework and XCFramework are found in the ios directory of the download. The _Embed_ setting must be "_Embed & Sign_".
 1. On the "General" tab of your application target, add `BrightcovePulse.framework` or `BrightcovePulse.xcframework` from the Pulse Plugin for Brightcove Player SDK download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting must be "_Embed & Sign_".
 1. On the "General" tab of your application target, add `PulseSDK.xcframework` and `OMSDK_Invidi.xcframework` from the INVIDI Technologies download to the list of **Frameworks, Libraries, and Embedded Content**. The _Embed_ setting for the XCFrameworks must be "_Embed & Sign_".
 1. On the "Build Settings" tab of your application target, ensure that the "Framework Search Paths" include the paths to the frameworks. This should have been done automatically unless the framework is stored under a different root directory than your project.
@@ -216,7 +216,7 @@ If you are using more than one plugin to the Brightcove Player SDK for iOS that 
 
 When composing session providers, the session preloading can be enabled from [`BCOVBasicSessionProvider`][basicprovider].
 
-[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L312-L325
+[basicprovider]: https://github.com/brightcove/brightcove-player-sdk-ios/blob/master/ios/BrightcovePlayerSDK.framework/Headers/BrightcovePlayerSDK-Swift.h#L407-L420
 
 ## AVPlayerViewController Support
 
