@@ -6,7 +6,7 @@
 	<dict>
 		<key>ios-arm64/BrightcovePulse.framework/BrightcovePulse</key>
 		<data>
-		8l1yQoGen0crUOChi2vowfwoIXc=
+		ab0Q7k+3zolS+VMIB1/9ZI6lcRQ=
 		</data>
 		<key>ios-arm64/BrightcovePulse.framework/Headers/BCOVPulseCompanionSlot.h</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>ios-arm64/BrightcovePulse.framework/Info.plist</key>
 		<data>
-		zerYYUPMH+uoQt1y3LdtGBoG9E0=
+		dtJbJuYY6ZRcPitG2W35H5ILiFQ=
 		</data>
 		<key>ios-arm64/BrightcovePulse.framework/Modules/module.modulemap</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/BrightcovePulse</key>
 		<data>
-		qrKkty8PgPTGYACUb06jQtSadlU=
+		EwROVKDS08LO3ounASb+a4A0iyQ=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/Headers/BCOVPulseCompanionSlot.h</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/Info.plist</key>
 		<data>
-		2H/X24CKsBrRJIp2zgaA5XyNKk4=
+		tT04q4/ViCzApDydBmn+Sga9yyU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/Modules/module.modulemap</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>tvos-arm64/BrightcovePulse.framework/BrightcovePulse</key>
 		<data>
-		V33Zc9ACTjgF+OamR3SiYReuXPw=
+		08zmUpY4YMHrCSfFUg7MsqF9ia4=
 		</data>
 		<key>tvos-arm64/BrightcovePulse.framework/Headers/BCOVPulseComponent.h</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>tvos-arm64/BrightcovePulse.framework/Info.plist</key>
 		<data>
-		vvg6xEfQfFfsIWoj+hz9aqkMGcM=
+		sZJGeA4/cupQouGdj07jxzFIUA4=
 		</data>
 		<key>tvos-arm64/BrightcovePulse.framework/Modules/module.modulemap</key>
 		<data>
@@ -86,7 +86,7 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/BrightcovePulse</key>
 		<data>
-		CoPS5KmoL4kF2L5X+5fyXI+vAAQ=
+		Z1UnbEJFs9C7DQv6JjGm18Zn9y4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/Headers/BCOVPulseComponent.h</key>
 		<data>
@@ -102,7 +102,7 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/Info.plist</key>
 		<data>
-		qGjXTN0Ekl/fxxQGZGzqlerktts=
+		isc5k8tBuAji9HCX1dhX7isfSEQ=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/Modules/module.modulemap</key>
 		<data>
@@ -115,11 +115,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			8l1yQoGen0crUOChi2vowfwoIXc=
+			ab0Q7k+3zolS+VMIB1/9ZI6lcRQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			O8eKSRrdpHpQ7X01TwIl7R6TqlncU3Had3TYs+7hJzg=
+			LuVj1yyA8/Kjjdy2jfYqpBITSrOxWg0B1bH2AG7isGM=
 			</data>
 		</dict>
 		<key>ios-arm64/BrightcovePulse.framework/Headers/BCOVPulseCompanionSlot.h</key>
@@ -170,11 +170,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			zerYYUPMH+uoQt1y3LdtGBoG9E0=
+			dtJbJuYY6ZRcPitG2W35H5ILiFQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			6mPNR4NT5ggwjKFlJ6MLGypec+RKhpVwOdqxGyl32Wg=
+			KH59OIqBubamlbWpbTWVNtpt0J/TOchlg/Mb3RjXODA=
 			</data>
 		</dict>
 		<key>ios-arm64/BrightcovePulse.framework/Modules/module.modulemap</key>
@@ -192,11 +192,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qrKkty8PgPTGYACUb06jQtSadlU=
+			EwROVKDS08LO3ounASb+a4A0iyQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			dMCIyRfT5AF9sCmKKmPDyGbQpoHyM2vUUUN5WhEg/H4=
+			XLX0g+ZB3R1DHAo3MeCwxuE7Hgd4kdnTUIHEzu0rx9M=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/Headers/BCOVPulseCompanionSlot.h</key>
@@ -247,11 +247,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2H/X24CKsBrRJIp2zgaA5XyNKk4=
+			tT04q4/ViCzApDydBmn+Sga9yyU=
 			</data>
 			<key>hash2</key>
 			<data>
-			1fBfa5g6GyZdLglTmUYZyabmmiTGeAC7OnXy/j+DmpQ=
+			r615sGn5DuKFHgqA7lIQnhL1F9Pq0KqBF/pnZisLxzQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/BrightcovePulse.framework/Modules/module.modulemap</key>
@@ -269,11 +269,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			V33Zc9ACTjgF+OamR3SiYReuXPw=
+			08zmUpY4YMHrCSfFUg7MsqF9ia4=
 			</data>
 			<key>hash2</key>
 			<data>
-			mAsvBPhVR1skTjukDhJ56W5mJHEnVajFtzZsjZZgaFA=
+			4MO+LlWbNMVEmYJyIqifKLOy1oh/FhjBJnrLyHdeRHM=
 			</data>
 		</dict>
 		<key>tvos-arm64/BrightcovePulse.framework/Headers/BCOVPulseComponent.h</key>
@@ -313,11 +313,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vvg6xEfQfFfsIWoj+hz9aqkMGcM=
+			sZJGeA4/cupQouGdj07jxzFIUA4=
 			</data>
 			<key>hash2</key>
 			<data>
-			KqI0244UgV6kp6Vk8FwTlacMSNytlZEa3UP98UVkIos=
+			vhWg2u4WBA1LX+J2M2KEGXJIKuvZLyIE5dxT//Snxao=
 			</data>
 		</dict>
 		<key>tvos-arm64/BrightcovePulse.framework/Modules/module.modulemap</key>
@@ -335,11 +335,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CoPS5KmoL4kF2L5X+5fyXI+vAAQ=
+			Z1UnbEJFs9C7DQv6JjGm18Zn9y4=
 			</data>
 			<key>hash2</key>
 			<data>
-			O3aa0B0/NWyiun/4LFEoAa9moQGQlXFQnsodl/SGbeU=
+			9ANalWbhEwlQywGJVtrqHedR/AT1TR7rwdFbHY3R+vQ=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/Headers/BCOVPulseComponent.h</key>
@@ -379,11 +379,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qGjXTN0Ekl/fxxQGZGzqlerktts=
+			isc5k8tBuAji9HCX1dhX7isfSEQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			4e9teSAl0Rdgs8dP4JZRLypFj12UX3xThOX128ywOz0=
+			zsyFrhsy1wEDHj8lKtaefJFjiwjuVudwjl251p78aAw=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/BrightcovePulse.framework/Modules/module.modulemap</key>
