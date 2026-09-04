@@ -1,4 +1,4 @@
-# Pulse Plugin for Brightcove Player SDK for iOS, version 7.2.17.40
+# Pulse Plugin for Brightcove Player SDK for iOS, version 7.2.18.42
 
 ## Installation
 
